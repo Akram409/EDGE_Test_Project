@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_project/text_field_practice.dart';
+import 'package:test_project/Calculator_App/calculator.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: false,
       ),
-      home: TextFieldPractice(),
+      home: Calculator(),
     );
   }
 }
