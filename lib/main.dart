@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_project/Calculator_App/calculator.dart';
+import 'package:test_project/Testing/testing.dart';
 
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: false,
       ),
-      home: Calculator(),
+      home: Testing(),
     );
   }
 }
