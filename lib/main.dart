@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_project/Testing/testing.dart';
+import 'package:test_project/SharedPrefrence/my_home_page_GetX.dart';
 
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: false,
       ),
-      home: Testing(),
+      home: MyHomePageGetx(title: "dsfs",),
     );
   }
 }
