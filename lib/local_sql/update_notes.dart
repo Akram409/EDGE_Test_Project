@@ -3,87 +3,71 @@ import 'package:get/get.dart';
 import 'package:test_project/local_sql/database/modal/db_helper.dart';
 import 'home_page.dart';
 import 'model/note.dart';
-class UpdateNotes extends StatefulWidget {
 
+class UpdateNotes extends StatefulWidget {
   final notes;
-  const UpdateNotes({super.key,required this.notes});
+  const UpdateNotes({super.key, required this.notes});
 
   @override
   State<UpdateNotes> createState() => _UpdateNotesState();
 }
 
 class _UpdateNotesState extends State<UpdateNotes> {
-
   late DatabaseHelper dbHelper;
 
-  var titleController=TextEditingController();
-  var descriptionController=TextEditingController();
+  var titleController = TextEditingController();
+  var descriptionController = TextEditingController();
 
   final GlobalKey<FormState> noteFormKey = GlobalKey();
 
   int? id;
 
-
-
   //add notes to database
-  Future  updateNotes(int id) async
-  {
+  Future updateNotes(int id) async {
     final updatedNote = Note(
       title: titleController.text,
       description: descriptionController.text,
     );
 
-    int check= await dbHelper.updateData(updatedNote.toMap(),id);
+    int check = await dbHelper.updateData(updatedNote.toMap(), id);
     print("Check=$check");
-    if(check>0)
-    {
-
-      Get.snackbar("Updated", "Note Updated",snackPosition: SnackPosition.BOTTOM);
+    if (check > 0) {
+      Get.snackbar("Updated", "Note Updated",
+          snackPosition: SnackPosition.BOTTOM);
       Get.offAll(HomePage());
-
+    } else {
+      Get.snackbar("Error", "Error in note update",
+          snackPosition: SnackPosition.BOTTOM);
     }
-    else
-    {
-      Get.snackbar("Error", "Error in note update",snackPosition: SnackPosition.BOTTOM);
-    }
-
-
   }
-
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     dbHelper = DatabaseHelper.instance;
-    titleController.text=widget.notes.title;
-    descriptionController.text=widget.notes.description;
-    id=widget.notes.id;
-
-
+    titleController.text = widget.notes.title;
+    descriptionController.text = widget.notes.description;
+    id = widget.notes.id;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
-            color: Colors.white
-        ),
+        iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.blue,
-        title: Text("Updates Notes",style: TextStyle(
-            color: Colors.white
-        ),),
-
-
+        title: Text(
+          "Updates Notes",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Form(
         key: noteFormKey,
-        child:SingleChildScrollView(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(30.0),
           child: Column(
             children: [
-
               TextFormField(
                 controller: titleController,
                 keyboardType: TextInputType.text,
@@ -98,7 +82,6 @@ class _UpdateNotesState extends State<UpdateNotes> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter note title";
@@ -107,8 +90,9 @@ class _UpdateNotesState extends State<UpdateNotes> {
                   return null;
                 },
               ),
-
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               TextFormField(
                 controller: descriptionController,
                 maxLines: 3,
@@ -124,7 +108,6 @@ class _UpdateNotesState extends State<UpdateNotes> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter description";
@@ -133,45 +116,33 @@ class _UpdateNotesState extends State<UpdateNotes> {
                   return null;
                 },
               ),
-
-              SizedBox(height: 50,),
-
+              SizedBox(
+                height: 50,
+              ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-
                   minimumSize: const Size.fromHeight(50),
                   backgroundColor: Colors.blue,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-
                 onPressed: () async {
-                  if(noteFormKey.currentState!.validate())
-                  {
+                  if (noteFormKey.currentState!.validate()) {
                     noteFormKey.currentState!.save();
 
-
-
                     updateNotes(id!);
-
-
-
                   }
-
                 },
-                child:  Text(
+                child: Text(
                   "Update Notes",
-                  style: const TextStyle(color: Colors.white,
-                      fontWeight: FontWeight.bold),
-
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
-
             ],
           ),
-
-        ) ,
+        ),
       ),
     );
   }
